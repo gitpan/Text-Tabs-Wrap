@@ -7,7 +7,7 @@ require Exporter;
 @EXPORT = qw(expand unexpand $tabstop);
 
 use vars qw($VERSION $tabstop $debug);
-$VERSION = 96.121201;
+$VERSION = 96.041801;
 
 use strict;
 
@@ -27,7 +27,7 @@ sub expand
 			/sex;
 	}
 	return @l if wantarray;
-	return $l[0];
+	return @l[0];
 }
 
 sub unexpand
@@ -39,10 +39,10 @@ sub unexpand
 	my @lines;
 	my $lastbit;
 	for $x (@l) {
-		@lines = split("\n", $x, -1);
+		@lines = split("\n", $x);
 		for $line (@lines) {
 			$line = expand($line);
-			@e = split(/(.{$tabstop})/,$line,-1);
+			@e = split(/(.{$tabstop})/,$line);
 			$lastbit = pop(@e);
 			$lastbit = '' unless defined $lastbit;
 			$lastbit = "\t"
@@ -60,7 +60,7 @@ sub unexpand
 		$x = join("\n", @lines);
 	}
 	return @l if wantarray;
-	return $l[0];
+	return @l[0];
 }
 
 1;

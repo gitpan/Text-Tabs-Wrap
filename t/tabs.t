@@ -75,13 +75,6 @@ END
 
 	   
 END
-TEST 11 u
-foobar                  IN	A		140.174.82.12
-
-END
-foobar			IN	A		140.174.82.12
-
-END
 DONE
 
 $| = 1;
