@@ -7,10 +7,10 @@ require Exporter;
 @EXPORT = qw(wrap fill);
 @EXPORT_OK = qw($columns $break $huge);
 
-$VERSION = 2009.0305;
+$VERSION = 2012.0815;
+$SUBVERSION = 'old';
 
-use vars qw($VERSION $columns $debug $break $huge $unexpand $tabstop
-	$separator $separator2);
+use vars qw($VERSION $SUBVERSION $columns $debug $break $huge $unexpand $tabstop $separator $separator2);
 use strict;
 
 BEGIN	{
@@ -165,10 +165,10 @@ all subsequent lines (C<$subsequent_tab>) independently.  Please note:
 C<$initial_tab> and C<$subsequent_tab> are the literal strings that will
 be used: it is unlikely you would want to pass in a number.
 
-Text::Wrap::fill() is a simple multi-paragraph formatter.  It formats
+C<Text::Wrap::fill()> is a simple multi-paragraph formatter.  It formats
 each paragraph separately and then joins them together when it's done.  It
 will destroy any whitespace in the original text.  It breaks text into
-paragraphs by looking for whitespace after a newline.  In other respects
+paragraphs by looking for whitespace after a newline.  In other respects,
 it acts like wrap().
 
 Both C<wrap()> and C<fill()> return a single string.
@@ -250,16 +250,31 @@ Result:
 
   "This is a bit of|text that forms a|normal book-style|paragraph"
 
+=head1 SUBVERSION
+
+This module comes in two flavors: one for modern perls (5.10 and above)
+and one for ancient obsolete perls.  The version for modern perls has
+support for Unicode.  The version for old perls does not.  You can tell
+which version you have installed by looking at C<$Text::Wrap::SUBVERSION>:
+it is C<old> for obsolete perls and C<modern> for current perls.
+
+This man page is for the version for obsolete perls and so that's probably
+what you've got.
+
 =head1 SEE ALSO
 
 For wrapping multi-byte characters: L<Text::WrapI18N>.
 For more detailed controls: L<Text::Format>.
 
+=head1 AUTHOR
+
+David Muir Sharnoff <cpan@dave.sharnoff.org> with help from Tim Pierce and
+many many others.  
+
 =head1 LICENSE
 
-David Muir Sharnoff <muir@idiom.org> with help from Tim Pierce and
-many many others.  Copyright (C) 1996-2009 David Muir Sharnoff.  
-This module may be modified, used, copied, and redistributed at
-your own risk.  Publicly redistributed versions that are modified 
-must use a different name.
+Copyright (C) 1996-2009 David Muir Sharnoff.  
+Copyright (C) 2012 Google, Inc.
+This module may be modified, used, copied, and redistributed at your own risk.
+Publicly redistributed modified versions must use a different name.
 
