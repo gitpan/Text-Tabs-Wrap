@@ -8,21 +8,14 @@ require Exporter;
 
 use vars qw($VERSION $SUBVERSION $tabstop $debug);
 $VERSION = 2012.0818;
-$SUBVERSION = 'modern';
+$SUBVERSION = 'old';
 
 use strict;
-
-use 5.010_000;
 
 BEGIN	{
 	$tabstop = 8;
 	$debug = 0;
 }
-
-my $CHUNK = qr/\X/;
-
-sub _xlen (_) { scalar(() = $_[0] =~ /$CHUNK/g) } 
-sub _xpos (_) { _xlen( substr( $_[0], 0, pos($_[0]) ) ) }
 
 sub expand {
 	my @l;
@@ -32,13 +25,10 @@ sub expand {
 		for (split(/^/m, $_, -1)) {
 			my $offs = 0;
 			s{\t}{
-			    # this works on both 5.10 and 5.11
-				$pad = $tabstop - (_xlen(${^PREMATCH}) + $offs) % $tabstop;
-			    # this works on 5.11, but fails on 5.10
-				#XXX# $pad = $tabstop - (_xpos() + $offs) % $tabstop;
+				$pad = $tabstop - (pos() + $offs) % $tabstop;
 				$offs += $pad - 1;
 				" " x $pad;
-			}peg;
+			}eg;
 			$s .= $_;
 		}
 		push(@l, $s);
@@ -60,7 +50,7 @@ sub unexpand
 		@lines = split("\n", $x, -1);
 		for $line (@lines) {
 			$line = expand($line);
-			@e = split(/(${CHUNK}{$tabstop})/,$line,-1);
+			@e = split(/(.{$tabstop})/,$line,-1);
 			$lastbit = pop(@e);
 			$lastbit = '' 
 				unless defined $lastbit;
@@ -120,12 +110,6 @@ the appropriate number of spaces.  Given a line with or without tabs in
 it, C<unexpand> adds tabs when it can save bytes by doing so, 
 like the C<unexpand -a> command.  
 
-Unlike the old unix utilities, this module correctly accounts for
-any Unicode combining characters (such as diacriticals) that may occur
-in each line for both expansion and unexpansion.  These are overstrike
-characters that do not increment the logical position.  Make sure
-you have the appropriate Unicode settings enabled.
-
 =head1 EXPORTS
 
 The following are exported:
@@ -157,11 +141,11 @@ C<local($Text::Tabs::tabstop)>.
     print unexpand $_;
   }
 
-Instead of the shell's C<expand> comand, use:
+Instead of the C<expand> comand, use:
 
   perl -MText::Tabs -n -e 'print expand $_'
 
-Instead of the shell's C<unexpand -a> command, use:
+Instead of the C<unexpand -a> command, use:
 
   perl -MText::Tabs -n -e 'print unexpand $_'
 
@@ -173,14 +157,8 @@ support for Unicode.  The version for old perls does not.  You can tell
 which version you have installed by looking at C<$Text::Tabs::SUBVERSION>:
 it is C<old> for obsolete perls and C<modern> for current perls.
 
-This man page is for the version for modern perls and so that's probably
+This man page is for the version for obsolete perls and so that's probably
 what you've got.
-
-=head1 BUGS
-
-Text::Tabs handles only tabs (C<"\t">) and combining characters (C</\pM/>).  It doesn't
-count backwards for backspaces (C<"\t">), omit other non-printing control characters (C</\pC/>),
-or otherwise deal with any other zero-, half-, and full-width characters.
 
 =head1 LICENSE
 
