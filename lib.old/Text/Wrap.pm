@@ -7,7 +7,7 @@ require Exporter;
 @EXPORT = qw(wrap fill);
 @EXPORT_OK = qw($columns $break $huge);
 
-$VERSION = 2012.0818;
+$VERSION = 2013.0426;
 $SUBVERSION = 'old';
 
 use vars qw($VERSION $SUBVERSION $columns $debug $break $huge $unexpand $tabstop $separator $separator2);
@@ -277,7 +277,8 @@ many many others.
 =head1 LICENSE
 
 Copyright (C) 1996-2009 David Muir Sharnoff.  
-Copyright (C) 2012 Google, Inc.
+Copyright (C) 2012-2013 Google, Inc.
 This module may be modified, used, copied, and redistributed at your own risk.
-Publicly redistributed modified versions must use a different name.
-
+Although allowed by the preceding license, please do not publicly
+redistribute modified versions of this code with the name "Text::Wrap"
+unless it passes the unmodified Text::Wrap test suite.
