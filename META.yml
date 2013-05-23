@@ -20,4 +20,4 @@ no_index:
 requires: {}
 resources:
   repository: http://github.com/muir/Text-Tabs-Wrap
-version: 2013.0522
+version: 2013.0523
