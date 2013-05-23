@@ -1,4 +1,3 @@
-
 package Text::Tabs;
 
 require Exporter;
@@ -7,7 +6,7 @@ require Exporter;
 @EXPORT = qw(expand unexpand $tabstop);
 
 use vars qw($VERSION $SUBVERSION $tabstop $debug);
-$VERSION = 2013.0426;
+$VERSION = 2013.0522;
 $SUBVERSION = 'modern';
 
 use strict;
@@ -157,7 +156,7 @@ C<local($Text::Tabs::tabstop)>.
     print unexpand $_;
   }
 
-Instead of the shell's C<expand> comand, use:
+Instead of the shell's C<expand> command, use:
 
   perl -MText::Tabs -n -e 'print expand $_'
 
